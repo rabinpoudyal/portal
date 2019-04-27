@@ -44,14 +44,30 @@ class News extends Component {
     this.fetchNews("us", "general", "");
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return nextState.news !== this.state.news;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return nextState.news !== this.state.news;
+  // }
+
+  removeNews = index => {
+    let allNews = [...this.state.news];
+    if (index !== -1) {
+      allNews.splice(index, 1);
+      this.setState({
+        news: allNews
+      });
+    }
+    console.log(this.state);
+  };
 
   renderItems() {
-    return this.state.news.map(item => (
+    return this.state.news.map((item, index) => (
       <Grid item md={4}>
-        <NewSingle key={item.url} item={item} />
+        <NewSingle
+          key={item.url}
+          item={item}
+          index={index}
+          removeNews={this.removeNews}
+        />
       </Grid>
     ));
   }
@@ -59,9 +75,6 @@ class News extends Component {
     return (
       <Grid container spacing={16} style={{ padding: 24 }}>
         <NewsForm fetchNews={this.fetchNews} />
-        {/* <Grid item xs={12} style={{ textAlign: "center" }}>
-          <CircularProgress size={50} />
-        </Grid> */}
         {this.state.news.length > 0 ? this.renderItems() : <Error />}
       </Grid>
     );

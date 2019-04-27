@@ -8,8 +8,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 
 const Header = () => (
-  <div>
-    <AppBar position="static">
+  <div style={{ marginBottom: "80px" }}>
+    <AppBar position="fixed">
       <Toolbar variant="dense">
         <IconButton color="inherit" aria-label="Menu">
           <MenuIcon />

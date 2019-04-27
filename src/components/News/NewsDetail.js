@@ -13,7 +13,13 @@ class NewsDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      news: {}
+      news: {
+        title: "",
+        urlToImage: "",
+        description: "",
+        author: "",
+        url: ""
+      }
     };
   }
 
