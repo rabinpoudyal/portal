@@ -3,51 +3,49 @@ import { Grid, Typography, Button } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import NewSingle from "./NewSingle";
-import NewsDetail from "./NewsDetail";
 import NewsForm from "./Form";
 import Error from "../layouts/error";
+import data from "../../data";
 
 class News extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      news: [],
-      errors: []
-    };
-  }
+  state = {
+    news: [],
+    errors: []
+  };
 
-  fetchNews = (country, category) => {
+  fetchNews = (country, category, query) => {
+    console.log(query);
+    console.log(country);
+    console.log(category);
+
     const url =
       "https://newsapi.org/v2/top-headlines?country=" +
       `${country}` +
       "&category=" +
       `${category}` +
+      "&q=" +
+      `${query}` +
       "&apiKey=33d98c664d634ddca125eb755fedc331";
-    //this.apiCall = setTimeout(() => {
-    fetch(url)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({ news: data.articles });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    //}, 1000);
-    console.log(this.apiCall);
+    if ((country.length > 0 && category.length > 0) || query.length > 2) {
+      fetch(url)
+        .then(response => {
+          return response.json();
+        })
+        .then(data => {
+          this.setState({ news: data.articles });
+        })
+        .catch(err => {
+          this.setState({ news: data.articles });
+        });
+    }
   };
 
   componentDidMount() {
-    this.fetchNews("us", "technology");
+    this.fetchNews("us", "general", "");
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return nextState.news !== this.state.news;
-  }
-
-  componentWillUnmount() {
-    //clearInterval(this.apiCall);
   }
 
   renderItems() {
@@ -58,13 +56,13 @@ class News extends Component {
     ));
   }
   render() {
-    console.log(this.state.errors);
     return (
       <Grid container spacing={16} style={{ padding: 24 }}>
         <NewsForm fetchNews={this.fetchNews} />
-        {/* {this.state.news.length === 0 && <CircularProgress size={50} />}
-        {this.state.errors.size > 0 && <Error errors={this.state.errors} />} */}
-        {this.renderItems()}
+        {/* <Grid item xs={12} style={{ textAlign: "center" }}>
+          <CircularProgress size={50} />
+        </Grid> */}
+        {this.state.news.length > 0 ? this.renderItems() : <Error />}
       </Grid>
     );
   }

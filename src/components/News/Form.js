@@ -1,12 +1,34 @@
 import React, { Component } from "react";
+import { countries } from "country-data";
 
 import {
   Grid,
   TextField,
   MenuItem,
   Button,
-  FormGroup
+  FormGroup,
+  Typography,
+  withStyles,
+  CircularProgress
 } from "@material-ui/core";
+
+const styles = theme => ({
+  container: {
+    flexWrap: "wrap",
+    alignItems: "center"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200
+  },
+  dense: {
+    marginTop: 19
+  },
+  menu: {
+    width: 200
+  }
+});
 
 class NewsForm extends Component {
   constructor(props) {
@@ -14,6 +36,7 @@ class NewsForm extends Component {
     this.state = {
       selectedCountry: "",
       selectedCategory: "",
+      queryString: "",
       availableCountries: [
         "ae",
         "ar",
@@ -88,58 +111,93 @@ class NewsForm extends Component {
     });
   };
 
-  handleSubmit = () => {
-    if (this.state.selectedCountry.length > 0 && this.state.selectedCategory) {
+  handleSubmit = e => {
+    if (
+      (this.state.selectedCountry.length > 0 && this.state.selectedCategory) ||
+      this.state.queryString.length > 2
+    ) {
       this.props.fetchNews(
         this.state.selectedCountry,
-        this.state.selectedCategory
+        this.state.selectedCategory,
+        this.state.queryString
       );
     }
   };
 
+  resetForm = () => {
+    this.setState({
+      queryString: "",
+      selectedCategory: "",
+      selectedCountry: ""
+    });
+  };
+
   render() {
+    const { classes } = this.props;
+
     return (
       <Grid item xs={12} style={{ textAlign: "center" }}>
-        <TextField
-          id="selectedCountry"
-          name="selectedCountry"
-          select
-          label="Country"
-          value={this.state.selectedCountry}
-          helperText="Please select country"
-          margin="normal"
-          onChange={this.handleChange}
-        >
-          {this.state.availableCountries.map((value, index) => (
-            <MenuItem key={index} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="selectedCategory"
-          name="selectedCategory"
-          select
-          label="Category"
-          value={this.state.selectedCategory}
-          helperText="Please select category"
-          margin="normal"
-          onChange={this.handleChange}
-        >
-          {this.state.availableCategories.map((value, index) => (
-            <MenuItem key={index} value={value}>
-              {value}
-            </MenuItem>
-          ))}
-        </TextField>
-
+        <Grid item>
+          <TextField
+            id="queryString"
+            name="queryString"
+            label="Search News"
+            value={this.state.queryString}
+            onChange={this.handleChange}
+            margin="normal"
+            className={classes.textField}
+          />
+        </Grid>
+        <Grid item>
+          <Typography color="primary">
+            Or, Select the following parameters
+          </Typography>
+        </Grid>
+        <form className={classes.container}>
+          <TextField
+            id="selectedCountry"
+            name="selectedCountry"
+            select
+            label="Country"
+            value={this.state.selectedCountry}
+            margin="normal"
+            onChange={this.handleChange}
+            className={classes.textField}
+          >
+            {this.state.availableCountries.map((value, index) => (
+              <MenuItem key={index} value={value}>
+                {countries[value.toUpperCase()].name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="selectedCategory"
+            name="selectedCategory"
+            select
+            label="Category"
+            value={this.state.selectedCategory}
+            margin="normal"
+            onChange={this.handleChange}
+            className={classes.textField}
+          >
+            {this.state.availableCategories.map((value, index) => (
+              <MenuItem key={index} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </TextField>
+        </form>
         <Grid item>
           <Button
             variant="contained"
             color="primary"
             onClick={this.handleSubmit}
+            style={{ margin: "20px" }}
           >
             Load News
+          </Button>
+          <Button variant="contained" color="primary" onClick={this.resetForm}>
+            Reset
           </Button>
         </Grid>
       </Grid>
@@ -147,4 +205,4 @@ class NewsForm extends Component {
   }
 }
 
-export default NewsForm;
+export default withStyles(styles)(NewsForm);
