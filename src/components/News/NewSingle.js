@@ -38,6 +38,9 @@ const NewSingle = ({ item }) => (
       <Button size="small" color="secondary" href={item.url} target="_blank">
         Full Article
       </Button>
+      <Button size="small" color="secondary" href={`/news/${item.title}`}>
+        Learn More
+      </Button>
     </CardActions>
   </Card>
 );

@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
+import { Link } from "react-router-dom";
+
 const Header = () => (
   <div>
     <AppBar position="static">
@@ -13,7 +15,9 @@ const Header = () => (
           <MenuIcon />
         </IconButton>
         <Typography variant="headline" color="inherit">
-          News Feed
+          <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+            Headlines App
+          </Link>
         </Typography>
       </Toolbar>
     </AppBar>
