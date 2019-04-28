@@ -1,9 +1,10 @@
 import NewSingle from "../src/components/News/NewSingle";
-import { Typography } from "@material-ui/core";
+import { Typography, CardMedia, Button, CardActions } from "@material-ui/core";
 import { exportAllDeclaration } from "@babel/types";
 
 const newsItem = {
   urlToImage: "google.com",
+  url: "google.com",
   title: "This is the title",
   source: {
     name: "google news"
@@ -12,11 +13,30 @@ const newsItem = {
 };
 
 describe("<NewSingle/>", () => {
-  it("accepts the item props correctly", () => {
-    //console.log(newsItem);
-    const wrapper = mount(<NewSingle item={newsItem} />);
-    console.log(wrapper.props().item);
-    //console.log(newsItem.title);
-    //expect(wrapper.find(".card-title").text()).to.equal(newsItem.title);
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<NewSingle item={newsItem} />);
+  });
+
+  it("renders all the items correctly", () => {
+    expect(wrapper.find(".card-title").length).toBe(1);
+    expect(wrapper.find(CardMedia).length).toBe(1);
+    expect(wrapper.find(Button).length).toBe(3);
+  });
+
+  it("renders the props correctly", () => {
+    expect(
+      wrapper
+        .find(".card-title")
+        .children()
+        .text()
+    ).toBe(newsItem.title);
+    expect(
+      wrapper
+        .find(".news-description")
+        .children()
+        .text()
+    ).toBe(newsItem.description);
+    expect(wrapper.find(".external-link").props().href).toBe(newsItem.url);
   });
 });

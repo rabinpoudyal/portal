@@ -190,13 +190,17 @@ class NewsForm extends Component {
         <Grid item>
           <Button
             variant="contained"
-            color="primary"
+            color="secondary"
             onClick={this.handleSubmit}
             style={{ margin: "20px" }}
           >
             Load News
           </Button>
-          <Button variant="contained" color="primary" onClick={this.resetForm}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.resetForm}
+          >
             Reset
           </Button>
         </Grid>

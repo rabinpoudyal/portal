@@ -44,9 +44,9 @@ class News extends Component {
     this.fetchNews("us", "general", "");
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return nextState.news !== this.state.news;
-  // }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextState.news !== this.state.news;
+  }
 
   removeNews = index => {
     let allNews = [...this.state.news];

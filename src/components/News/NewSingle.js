@@ -27,7 +27,9 @@ const NewSingle = ({ item, index, removeNews }) => (
             {item.title}
           </Typography>
           <hr />
-          <Typography component="p">{item.description}</Typography>
+          <Typography component="p" className="news-description">
+            {item.description}
+          </Typography>
         </EqualHeight>
         <Typography component="p" color="primary">
           Source: {item.source.name}
@@ -41,6 +43,7 @@ const NewSingle = ({ item, index, removeNews }) => (
         color="secondary"
         href={item.url}
         target="_blank"
+        className="external-link"
       >
         Full Article
       </Button>
