@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Typography,
   Card,
-  CardBody,
   CardMedia,
   CardContent,
   Grid,
@@ -28,7 +27,6 @@ class NewsDetail extends Component {
       "https://newsapi.org/v2/everything?q=" +
       this.props.match.params.id +
       "&apiKey=33d98c664d634ddca125eb755fedc331";
-    console.log(url);
     fetch(url)
       .then(response => {
         return response.json();
@@ -41,7 +39,6 @@ class NewsDetail extends Component {
       });
   }
   render() {
-    console.log(this.state.news);
     return (
       <Grid xs={12}>
         <Card>

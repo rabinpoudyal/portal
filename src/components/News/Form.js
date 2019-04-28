@@ -6,10 +6,8 @@ import {
   TextField,
   MenuItem,
   Button,
-  FormGroup,
   Typography,
-  withStyles,
-  CircularProgress
+  withStyles
 } from "@material-ui/core";
 
 const styles = theme => ({
@@ -34,8 +32,8 @@ class NewsForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedCountry: "",
-      selectedCategory: "",
+      selectedCountry: "us",
+      selectedCategory: "technology",
       queryString: "",
       availableCountries: [
         "ae",
@@ -193,12 +191,14 @@ class NewsForm extends Component {
             color="secondary"
             onClick={this.handleSubmit}
             style={{ margin: "20px" }}
+            className="submit-button"
           >
             Load News
           </Button>
           <Button
             variant="contained"
             color="secondary"
+            className="reset-button"
             onClick={this.resetForm}
           >
             Reset

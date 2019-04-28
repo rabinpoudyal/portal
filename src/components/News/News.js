@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Grid, Typography, Button } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 import NewSingle from "./NewSingle";
 import NewsForm from "./Form";
 import Error from "../layouts/error";
 import data from "../../data";
+
+import { Grid } from "@material-ui/core";
 
 class News extends Component {
   state = {
@@ -14,10 +14,6 @@ class News extends Component {
   };
 
   fetchNews = (country, category, query) => {
-    console.log(query);
-    console.log(country);
-    console.log(category);
-
     const url =
       "https://newsapi.org/v2/top-headlines?country=" +
       `${country}` +
@@ -41,7 +37,7 @@ class News extends Component {
   };
 
   componentDidMount() {
-    this.fetchNews("us", "general", "");
+    this.fetchNews("us", "technology", "");
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,14 +52,13 @@ class News extends Component {
         news: allNews
       });
     }
-    console.log(this.state);
   };
 
   renderItems() {
     return this.state.news.map((item, index) => (
-      <Grid item md={4}>
+      <Grid item md={4} key={index}>
         <NewSingle
-          key={item.url}
+          key={index}
           item={item}
           index={index}
           removeNews={this.removeNews}
