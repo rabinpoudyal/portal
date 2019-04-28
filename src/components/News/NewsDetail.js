@@ -17,7 +17,8 @@ class NewsDetail extends Component {
         urlToImage: "",
         description: "",
         author: "",
-        url: ""
+        url: "",
+        content: ""
       }
     };
   }
@@ -32,15 +33,25 @@ class NewsDetail extends Component {
         return response.json();
       })
       .then(data => {
-        this.setState({ news: data.articles[0] });
+        if (data.articles[0]) {
+          this.setState({ news: data.articles[0] });
+        }
       })
       .catch(error => {
         console.log(error);
       });
   }
   render() {
+    const {
+      title,
+      urlToImage,
+      url,
+      description,
+      author,
+      content
+    } = this.state.news;
     return (
-      <Grid xs={12}>
+      <Grid item xs={12}>
         <Card>
           <Typography
             color="primary"
@@ -50,10 +61,11 @@ class NewsDetail extends Component {
             gutterBottom
             style={{ marginTop: "3%" }}
           >
-            {this.state.news.title}
+            {title || "no title"}
           </Typography>
           <CardMedia
-            image={this.state.news.urlToImage}
+            image={urlToImage}
+            src="image"
             style={{ height: "50px", paddingTop: "56%" }}
           />
           <CardContent>
@@ -65,7 +77,7 @@ class NewsDetail extends Component {
               gutterBottom
               style={{ marginTop: "3%" }}
             >
-              {this.state.news.description}
+              {description}
             </Typography>
             <Typography
               color="inherit"
@@ -75,17 +87,17 @@ class NewsDetail extends Component {
               gutterBottom
               style={{ marginTop: "3%" }}
             >
-              Author: {this.state.news.author}
+              Author: {author}
             </Typography>
             <hr />
-            <Typography>{this.state.news.content}</Typography>
+            <Typography>{content}</Typography>
           </CardContent>
         </Card>
         <Grid item style={{ textAlign: "center", padding: "30px" }}>
           <Button
             color="primary"
             variant="contained"
-            href={this.state.news.url}
+            href={url}
             target="_blank"
           >
             Redirect me to news site
