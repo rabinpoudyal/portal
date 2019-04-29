@@ -111,7 +111,8 @@ class NewsForm extends Component {
 
   handleSubmit = e => {
     if (
-      (this.state.selectedCountry.length > 0 && this.state.selectedCategory) ||
+      (this.state.selectedCountry.length > 0 &&
+        this.state.selectedCategory.length > 2) ||
       this.state.queryString.length > 2
     ) {
       this.props.fetchNews(
